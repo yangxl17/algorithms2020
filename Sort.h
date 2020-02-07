@@ -10,8 +10,10 @@ public:
 	{
 		Heap<T>::HeapSort(A,size);
 	}
+	static void QuickSort(T* A, int p, int r);
 private:
 	static void Merge(T* A, int p, int q, int r);
+	static int Partition(T* A, int p, int r);
 };
 template <class T>
 void Sort<T>::InsertSort(T* A, int Length)
@@ -28,6 +30,16 @@ void Sort<T>::InsertSort(T* A, int Length)
 			else
 				break;
 		}
+}
+template<class T>
+inline void Sort<T>::QuickSort(T* A, int p, int r)
+{
+	if (r > p)
+	{
+		int q = Partition(A, p, r);
+		QuickSort(A, p, q - 1);
+		QuickSort(A, q + 1, r);
+	}
 }
 template <class T>
 void Sort<T>::Merge(T* A, int p, int q, int r)
@@ -72,6 +84,25 @@ void Sort<T>::Merge(T* A, int p, int q, int r)
 			j = j + 1;
 		}
 	}
+}
+template<class T>
+inline int Sort<T>::Partition(T* A, int p, int r)
+{
+	int i = p - 1;
+	int tag = A[r];
+	for (int j = p; j < r; j++)
+	{
+		if (A[j] < tag)
+		{
+			T temp = A[j];
+			A[j] = A[i + 1];
+			A[i + 1] = temp;
+			i = i + 1;
+		}
+	}
+	A[r] = A[i + 1];
+	A[i + 1] = tag;
+	return i + 1;
 }
 template <class T>
 void Sort<T>::MergeSort(T* A, int p, int r)
