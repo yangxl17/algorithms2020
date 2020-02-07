@@ -1,10 +1,15 @@
 #pragma once
+#include "Heap.h"
 template <class T>
 class Sort
 {
 public:
 	static void InsertSort(T* A,int Length);
 	static void MergeSort(T* A, int p, int r);
+	static void HeapSort(T* A, int size)
+	{
+		Heap<T>::HeapSort(A,size);
+	}
 private:
 	static void Merge(T* A, int p, int q, int r);
 };
