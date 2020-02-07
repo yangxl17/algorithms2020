@@ -1,0 +1,12 @@
+#include <iostream>
+#include "Sort.h"
+using namespace std;
+int main()
+{
+	int A[] = { 9,3,7,5,2,0,9,1 };
+	Sort<int>::MergeSort(A,0,7);
+	for (int i = 0; i < 8; i++)
+	{
+		cout << A[i] << ' ';
+	}
+}
