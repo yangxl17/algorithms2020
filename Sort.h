@@ -1,5 +1,6 @@
 #pragma once
 #include "Heap.h"
+#include <iostream>
 template <class T>
 class Sort
 {
@@ -11,6 +12,7 @@ public:
 		Heap<T>::HeapSort(A,size);
 	}
 	static void QuickSort(T* A, int p, int r);
+	static void CountingSort(int* A, int* B, int length, int k);
 private:
 	static void Merge(T* A, int p, int q, int r);
 	static int Partition(T* A, int p, int r);
@@ -39,6 +41,24 @@ inline void Sort<T>::QuickSort(T* A, int p, int r)
 		int q = Partition(A, p, r);
 		QuickSort(A, p, q - 1);
 		QuickSort(A, q + 1, r);
+	}
+}
+template<class T>
+inline void Sort<T>::CountingSort(int* A, int* B, int length, int k)
+{
+	int* NewArray = new int[k+1]();
+	for (int i = 0; i <= length - 1; i++)
+	{
+		NewArray[A[i]]++;
+	}
+	for (int i = 1; i <= k; i++)
+	{
+		NewArray[i] = NewArray[i] + NewArray[i - 1];
+	}
+	for (int i = length-1; i >=0; i--)
+	{
+		B[NewArray[A[i]]-1] = A[i];
+		NewArray[A[i]] = NewArray[A[i]] - 1;
 	}
 }
 template <class T>
