@@ -3,11 +3,10 @@
 using namespace std;
 int main()
 {
-	int A[] = { 9,3,7,5,2,0,10,1 };
-	int B[8];
-	Sort<int>::CountingSort(A,B,8,10);
-	for (int i = 0; i < 8; i++)
+	int A[] = { 9,3,7,5,2,5,6,1 ,6};
+	Sort<int>::RadixSort(A,3,3);
+	for (int i = 0; i < 9; i++)
 	{
-		cout << B[i] << ' ';
+		cout << A[i] << ' ';
 	}
 }

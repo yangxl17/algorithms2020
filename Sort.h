@@ -1,6 +1,5 @@
 #pragma once
 #include "Heap.h"
-#include <iostream>
 template <class T>
 class Sort
 {
@@ -13,6 +12,7 @@ public:
 	}
 	static void QuickSort(T* A, int p, int r);
 	static void CountingSort(int* A, int* B, int length, int k);
+	static void RadixSort(int *A, int length, int d);
 private:
 	static void Merge(T* A, int p, int q, int r);
 	static int Partition(T* A, int p, int r);
@@ -60,6 +60,39 @@ inline void Sort<T>::CountingSort(int* A, int* B, int length, int k)
 		B[NewArray[A[i]]-1] = A[i];
 		NewArray[A[i]] = NewArray[A[i]] - 1;
 	}
+	delete[] NewArray;
+}
+template<class T>
+inline void Sort<T>::RadixSort(int *A, int length, int d)
+{
+	int* B = new int[length*d];
+	for (int j = 0; j <= d - 1; j++)
+	{
+		int* NewArray = new int[10]();
+		for (int i = j*length; i <= (j+1)*length - 1; i++)
+		{
+			NewArray[A[i]]++;
+		}
+		for (int i = 1; i <= 9; i++)
+		{
+			NewArray[i] = NewArray[i] + NewArray[i - 1];
+		}
+		for (int i = length - 1; i >= 0; i--)
+		{
+			int k = i + j * length;
+			for (int j = 0; j <= d - 1; j++)
+			{
+				B[NewArray[A[k]] - 1+j*length] = A[i+j*length];
+			}
+			NewArray[A[k]] = NewArray[A[k]] - 1;
+		}
+		delete[] NewArray;
+		for (int k = 0; k <= d * length - 1; k++)
+		{
+			A[k] = B[k];
+		}
+	}
+	delete[] B;
 }
 template <class T>
 void Sort<T>::Merge(T* A, int p, int q, int r)
