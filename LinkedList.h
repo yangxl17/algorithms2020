@@ -69,7 +69,11 @@ inline void LinkedList<T>::remove(Node<T>* node)
 template<class T>
 inline void LinkedList<T>::insertsort()
 {
-	Node<T>* pointer = head->next;
+	Node<T>* pointer = nullptr;
+	if (head != nullptr)
+	{
+		pointer = head->next;
+	}
 	while (pointer != nullptr)
 	{
 		T ndata = pointer->key;

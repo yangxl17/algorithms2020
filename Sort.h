@@ -1,5 +1,6 @@
 #pragma once
 #include "Heap.h"
+#include "LinkedList.h"
 template <class T>
 class Sort
 {
@@ -13,6 +14,7 @@ public:
 	static void QuickSort(T* A, int p, int r);
 	static void CountingSort(int* A, int* B, int length, int k);
 	static void RadixSort(int *A, int length, int d);
+	static void BucketSort(float* A, int length);
 private:
 	static void Merge(T* A, int p, int q, int r);
 	static int Partition(T* A, int p, int r);
@@ -93,6 +95,28 @@ inline void Sort<T>::RadixSort(int *A, int length, int d)
 		}
 	}
 	delete[] B;
+}
+template<class T>
+inline void Sort<T>::BucketSort(float* A, int length)
+{
+	auto listArray = new LinkedList<float>[length]();
+	for (int i = 0; i <= length - 1; i++)
+	{
+		listArray[int(floor(length * A[i]))].insert(A[i]);
+	}
+	int j = 0;
+	for (int i = 0; i <= length - 1; i++)
+	{
+		listArray[i].insertsort();
+		auto head = listArray[i].GetHead();
+		while (head != nullptr)
+		{
+			A[j] = head->key;
+			head = head->next;
+			j++;
+		}
+	}
+	delete[] listArray;
 }
 template <class T>
 void Sort<T>::Merge(T* A, int p, int q, int r)

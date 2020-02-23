@@ -1,19 +1,12 @@
 #include <iostream>
 #include "Sort.h"
-#include "LinkedList.h"
 using namespace std;
 int main()
 {
-	LinkedList<int> list;
-	list.insert(1);
-	list.insert(0);
-	list.insert(10);
-	list.insert(-5);
-	list.insertsort();
-	auto head = list.GetHead();
-	while (head != nullptr)
+	float A[] = { 0.5,0.61,0.9,0.3,0.4,0.5,0.11 };
+	Sort<float>::BucketSort(A, 7);
+	for (int i = 0; i <= 6; i++)
 	{
-		cout << head->key << endl;
-		head = head->next;
+		cout << A[i] << endl;
 	}
 }
