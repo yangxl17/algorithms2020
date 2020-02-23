@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Heap.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Sort.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

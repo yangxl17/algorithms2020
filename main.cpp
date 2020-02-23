@@ -1,12 +1,19 @@
 #include <iostream>
 #include "Sort.h"
+#include "LinkedList.h"
 using namespace std;
 int main()
 {
-	int A[] = { 9,3,7,5,2,5,6,1 ,6};
-	Sort<int>::RadixSort(A,3,3);
-	for (int i = 0; i < 9; i++)
+	LinkedList<int> list;
+	list.insert(1);
+	list.insert(0);
+	list.insert(10);
+	list.insert(-5);
+	list.insertsort();
+	auto head = list.GetHead();
+	while (head != nullptr)
 	{
-		cout << A[i] << ' ';
+		cout << head->key << endl;
+		head = head->next;
 	}
 }
