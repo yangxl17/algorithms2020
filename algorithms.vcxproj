@@ -25,6 +25,7 @@
     <ClInclude Include="Heap.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Sort.h" />
+    <ClInclude Include="Stack.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

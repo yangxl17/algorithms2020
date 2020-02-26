@@ -1,12 +1,18 @@
 #include <iostream>
 #include "Sort.h"
+#include "Stack.h"
 using namespace std;
 int main()
 {
-	float A[] = { 0.5,0.61,0.9,0.3,0.4,0.5,0.11 };
-	Sort<float>::BucketSort(A, 7);
-	for (int i = 0; i <= 6; i++)
+	Stack<int> stack(2);
+	stack.Push(1);
+	stack.Push(-1);
+	stack.Push(10);
+	stack.Push(100);
+	stack.Push(-7);
+	stack.Push(9);
+	while (stack.Empty())
 	{
-		cout << A[i] << endl;
+		cout << stack.Pop() << endl;
 	}
 }
