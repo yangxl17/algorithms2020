@@ -23,6 +23,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BST.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="LinkedList.h" />
