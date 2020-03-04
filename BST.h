@@ -1,18 +1,22 @@
 #pragma once
 #include<iostream>
+enum class Color{Red,Black};
+std::ostream& operator<<(std::ostream& out, const Color& color);
 template <class P, class T=int>
 struct BSTnode
 {
 	BSTnode* parent = nullptr;
 	BSTnode* leftchild = nullptr;
 	BSTnode* rightchild = nullptr;
-	T key;
-	P data;
+	Color color= Color::Red;
+	T key=T();
+	P data=P();
 };
 template <class P, class T=int>
 class BST
 {
-private:
+protected:
+	BSTnode<P, T>* null;
 	BSTnode<P,T>* root;
 	BSTnode<P,T>* Minimum(BSTnode<P,T>* x);
 	BSTnode<P,T>* Maxmum(BSTnode<P,T>* x);
@@ -24,22 +28,22 @@ public:
 	~BST();
 	void InorderTreeWalk();
 	void InorderTreeWalk(BSTnode<P,T>* x);
-	void Insert(const T& key, const P& data);
+	virtual void Insert(const T& key, const P& data);
 	BSTnode<P,T>* Search(const T& k);
-	void Remove(const T& k);
+	virtual void Remove(const T& k);
 	P& operator[](const T& k);
 };
 
 template<class P, class T>
 inline BSTnode<P, T>* BST<P, T>::Minimum(BSTnode<P, T>* x)
 {
-	if (x == nullptr)
+	if (x == null)
 	{
-		return nullptr;
+		return null;
 	}
 	else
 	{
-		while (x->leftchild != nullptr)
+		while (x->leftchild != null)
 		{
 			x = x->leftchild;
 		}
@@ -50,13 +54,13 @@ inline BSTnode<P, T>* BST<P, T>::Minimum(BSTnode<P, T>* x)
 template<class P, class T>
 inline BSTnode<P, T>* BST<P, T>::Maxmum(BSTnode<P, T>* x)
 {
-	if (x == nullptr)
+	if (x == null)
 	{
-		return nullptr;
+		return null;
 	}
 	else
 	{
-		while (x->rightchild != nullptr)
+		while (x->rightchild != null)
 		{
 			x = x->rightchild;
 		}
@@ -68,28 +72,28 @@ template<class P, class T>
 inline BSTnode<P, T>* BST<P, T>::Successor(BSTnode<P, T>* x)
 {
 	const auto y = x;
-	if (x != nullptr)
+	if (x != null)
 	{
-		if (x->rightchild != nullptr)
+		if (x->rightchild != null)
 		{
 			return Minimum(x->rightchild);
 		}
 		else
 		{
-			while (x->parent!=nullptr&&x->parent->rightchild==x)
+			while (x->parent!=null&&x->parent->rightchild==x)
 			{
 				x = x->parent;
 			}
 			return x->parent;
 		}
 	}
-	return nullptr;
+	return null;
 }
 
 template<class P, class T>
 inline void BST<P, T>::DeleteTree(BSTnode<P, T>* x)
 {
-	if (x == nullptr)
+	if (x == null)
 	{
 		DeleteTree(x->leftchild);
 		DeleteTree(x->rightchild);
@@ -115,22 +119,22 @@ inline void BST<P, T>::TransPlant(BSTnode<P, T>* u, BSTnode<P, T>* v)
 			u->parent->rightchild = v;
 		}
 	}
-	if (v != nullptr)
-	{
-		v->parent = u->parent;
-	}
+	v->parent = u->parent;
 }
 
 template<class P, class T>
 inline BST<P, T>::BST()
 {
-	root = nullptr;
+	null = new BSTnode<P, T>;
+	null->color = Color::Black;
+	root = null;
 }
 
 template<class P, class T>
 inline BST<P, T>::~BST()
 {
 	DeleteTree(root);
+	delete null;
 }
 
 template<class P, class T>
@@ -142,10 +146,36 @@ inline void BST<P, T>::InorderTreeWalk()
 template<class P, class T>
 inline void BST<P, T>::InorderTreeWalk(BSTnode<P, T>* x)
 {
-	if (x != nullptr)
+	if (x != null)
 	{
 		InorderTreeWalk(x->leftchild);
-		std::cout << x->key << ":" << x->data << std::endl;
+		std::cout << x->key << ":" << x->data <<"<"<< x->color;
+		int i = 0;
+		BSTnode<P, T>* y = x;
+		if (y->leftchild == null && y->rightchild == null)
+		{
+			while (y != null)
+			{
+				if (y->color == Color::Black)
+				{
+					i = i + 1;
+				}
+				y = y->parent;
+			}
+			std::cout << "<" << i << std::endl;
+		}
+		else
+		{
+			std::cout << std::endl;
+		}
+		if (y->color == Color::Red && y->parent->color == Color::Red)
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				std::cout << "Error£¡";
+			}
+			std::cout << std::endl;
+		}
 		InorderTreeWalk(x->rightchild);
 	}
 }
@@ -157,17 +187,20 @@ inline void BST<P, T>::Insert(const T& key, const P& data)
 	BSTnode<P, T>* node = new BSTnode<P, T>;
 	node->key = key;
 	node->data = data;
-	if (x == nullptr)
+	node->leftchild = null;
+	node->rightchild = null;
+	node->parent = null;
+	if (x == null)
 	{
 		root = node;
 	}
 	else
 	{
-		while (x != nullptr)
+		while (x != null)
 		{
 			if (x->key > key)
 			{
-				if (x->leftchild != nullptr)
+				if (x->leftchild != null)
 				{
 					x = x->leftchild;
 				}
@@ -180,7 +213,7 @@ inline void BST<P, T>::Insert(const T& key, const P& data)
 			}
 			else
 			{
-				if (x->rightchild != nullptr)
+				if (x->rightchild != null)
 				{
 					x = x->rightchild;
 				}
@@ -199,7 +232,7 @@ template<class P, class T>
 inline BSTnode<P, T>* BST<P, T>::Search(const T& k)
 {
 	BSTnode<P, T>* x = root;
-	while (x != nullptr && x->key != k)
+	while (x != null && x->key != k)
 	{
 		if (x->key > k)
 		{
@@ -217,13 +250,13 @@ template<class P, class T>
 inline void BST<P, T>::Remove(const T& k)
 {
 	BSTnode<P, T>* x = Search(k);
-	if (x != nullptr)
+	if (x != null)
 	{
-		if (x->leftchild == nullptr)
+		if (x->leftchild == null)
 		{
 			TransPlant(x, x->rightchild);
 		}
-		else if (x->rightchild == nullptr)
+		else if (x->rightchild == null)
 		{
 			TransPlant(x, x->leftchild);
 		}

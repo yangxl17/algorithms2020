@@ -4,24 +4,26 @@
 #include "Stack.h"
 #include "Queue.h"
 #include "HashTable.h"
-#include "BST.h"
+#include "RedBlackTree.h"
 using namespace std;
 int main()
 {
-	BST<string, int> bst;
-	bst.Insert(5, "I ");
-	bst.Insert(2, "love ");
-	bst.Insert(0, "you!");
-	bst.Insert(1, "I");
-	bst.Insert(3, "want");
-	bst.Insert(1, "a");
-	bst.Insert(4, "girlfriend!");
+	RedBlackTree<string, int> bst;
+	for (int i = 0 ; i < 2000; i++)
+	{
+		bst.Insert(i, "ok");
+	}
+	for (int j = 0; j < 1000; j = j + 2)
+	{
+		bst.Remove(j);
+	}
+	for (int j = 0; j < 2000; j=j+3)
+	{
+		bst.Remove(j);
+	}
+	for (int i = 0; i < 2000; i=i+5)
+	{
+		bst.Insert(i, "ok");
+	}
 	bst.InorderTreeWalk();
-	bst.Remove(5);
-	bst.Remove(2);
-	bst.Remove(0);
-	bst.InorderTreeWalk();
-	cout << bst[4]<<endl;
-	bst[4] = "girlfriends!";
-	cout << bst[4] << endl;
 }
